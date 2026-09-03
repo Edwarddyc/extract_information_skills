@@ -1,0 +1,62 @@
+id,name,url,access,tier,axes,cadence,trust,noise,query_hint,reason
+openai-news,OpenAI News,https://openai.com/news/rss.xml,rss,core,framework|evaluation|product,weekly,5,3,agents evals engineering,Primary model and agent research announcements
+openai-engineering,OpenAI Engineering,https://openai.com/news/engineering/,page,core,framework|evaluation|product,weekly,5,2,agent loop harness sandbox infrastructure,Primary OpenAI technical engineering index
+openai-research,OpenAI Research,https://openai.com/news/research/,page,core,evaluation|evolution|product,weekly,5,2,agents evaluation reasoning research,Primary OpenAI research index
+anthropic-research,Anthropic Research,https://www.anthropic.com/research,page,core,evaluation|evolution|product,weekly,5,2,agents alignment interpretability economic research,Primary research index
+claude-blog,Claude Blog,https://claude.com/blog,page,core,framework|evaluation|product,weekly,5,3,agents Claude Code harness skills MCP,Primary Claude product and agent engineering posts
+deepmind-blog,Google DeepMind Blog,https://deepmind.google/discover/blog/rss.xml,rss,core,evaluation|evolution|product,weekly,5,3,agents reasoning self-improvement,Primary research and system reports
+google-research,Google Research Blog,https://research.google/blog/rss/,rss,specialist,evaluation|evolution,biweekly,5,3,agents evaluation inference compute,Primary research summaries
+meta-ai-blog,Meta AI Blog,https://ai.meta.com/blog/rss/,rss,specialist,framework|evaluation|evolution,biweekly,5,3,agents benchmark open source,Primary research and open-source announcements
+huggingface-blog,Hugging Face Blog,https://huggingface.co/blog/feed.xml,rss,specialist,framework|evaluation|product,weekly,4,3,agents benchmark transformers,Open ecosystem engineering and evaluation
+huggingface-trending-papers,Hugging Face Trending Papers,https://huggingface.co/papers/trending,page,specialist,evaluation|evolution,weekly,3,4,weekly trending papers agents reinforcement learning,Public no-key paper attention signal requiring primary-paper verification
+github-trending,GitHub Trending,https://github.com/trending?since=weekly,page,specialist,framework|evaluation|evolution,weekly,3,5,paper code agent reinforcement learning,Public no-key weekly artifact momentum signal requiring repository verification
+arxiv-cs-ai,arXiv cs.AI recent,https://arxiv.org/list/cs.AI/recent,page,core,framework|evaluation|evolution,weekly,4,5,agent benchmark self-improvement,High-recall primary paper index
+arxiv-cs-ma,arXiv cs.MA recent,https://arxiv.org/list/cs.MA/recent,page,specialist,framework|evaluation|evolution,weekly,4,4,multi-agent autonomous agents,Primary multi-agent paper index
+openreview,OpenReview,https://openreview.net/,search,core,evaluation|evolution,weekly,4,4,agent benchmark LLM judge test-time,Primary papers reviews and discussion
+pmlr,PMLR Proceedings,https://proceedings.mlr.press/,page,specialist,evaluation|evolution,event,5,2,agents reinforcement learning evaluation,Primary conference proceedings
+acl-anthology,ACL Anthology,https://aclanthology.org/,search,specialist,framework|evaluation|evolution,event,5,3,language agents benchmark self-reflection,Primary NLP proceedings
+mlsys-proceedings,MLSys Proceedings,https://proceedings.mlsys.org/,page,specialist,framework|evaluation,event,5,2,inference systems serving efficiency,Primary systems proceedings
+hermes-repo,NousResearch Hermes Agent,https://github.com/NousResearch/hermes-agent/releases.atom,atom,core,framework,weekly,5,2,Hermes agent release architecture,Primary Hermes release stream
+pi-agent,Pi Agent Harness,https://github.com/earendil-works/pi/releases.atom,atom,core,framework|product,weekly,5,2,coding agent runtime tools state extensions,Primary Pi agent harness releases
+deepseek-harness,DeepSeek Harness,https://github.com/deepseek-ai/deepseek-harness/commits/master.atom,atom,core,framework|evaluation|product,weekly,5,2,dsh Cordis agent loop plugin architecture,Primary DeepSeek Harness change stream
+cordis-repo,Cordis,https://github.com/cordiverse/cordis/commits/master.atom,atom,specialist,framework,weekly,5,2,lifecycle effects dependency injection composability,Primary plugin runtime change stream
+nonebot-repo,NoneBot2,https://github.com/nonebot/nonebot2/releases.atom,atom,specialist,framework|product,biweekly,5,3,plugin adapter dependency injection,Primary framework releases
+agno-repo,Agno,https://github.com/agno-agi/agno/releases.atom,atom,core,framework|product,weekly,5,3,agent framework runtime memory,Primary framework releases
+langgraph-repo,LangGraph,https://github.com/langchain-ai/langgraph/releases.atom,atom,core,framework|product,weekly,5,3,runtime state persistence interrupts,Primary agent runtime releases
+langchain-repo,LangChain,https://github.com/langchain-ai/langchain/releases.atom,atom,specialist,framework|evaluation|product,weekly,5,4,core agents tools streaming breaking changes,Primary LangChain package releases
+langchain-blog,LangChain Blog,https://blog.langchain.dev/rss/,rss,specialist,framework|evaluation|product,weekly,4,4,agents LangGraph evaluation,Engineering explanations and product patterns
+llamaindex-blog,LlamaIndex Blog,https://www.llamaindex.ai/blog,page,specialist,framework|product,biweekly,4,4,agents workflows document intelligence,Framework and document workflow patterns
+autogen-repo,Microsoft AutoGen,https://github.com/microsoft/autogen/releases.atom,atom,paused,framework|evaluation,monthly,5,3,multi-agent runtime evaluation,Paused because Microsoft Agent Framework is the direct successor
+semantic-kernel,Semantic Kernel,https://github.com/microsoft/semantic-kernel/releases.atom,atom,paused,framework|product,monthly,5,3,agent orchestration plugins,Paused because Microsoft Agent Framework is the direct successor
+pydantic-ai,PydanticAI,https://github.com/pydantic/pydantic-ai/releases.atom,atom,specialist,framework|evaluation,weekly,5,3,capabilities graph runtime typed tools durable execution,Harness-first and type-safe runtime abstractions
+google-adk,Google Agent Development Kit,https://github.com/google/adk-python/releases.atom,atom,specialist,framework|evaluation|product,weekly,5,3,runner session memory workflow rewind HITL,Primary lifecycle and workflow implementation changes
+microsoft-agent-framework,Microsoft Agent Framework,https://github.com/microsoft/agent-framework/releases.atom,atom,specialist,framework|evaluation|product,weekly,5,3,durable workflow middleware telemetry multi-agent,Successor implementation for AutoGen and Semantic Kernel
+openhands,OpenHands,https://github.com/OpenHands/openhands/releases.atom,atom,specialist,framework|evaluation,weekly,5,3,sandbox runtime action observation workspace recovery,Production coding-agent harness and execution isolation
+letta-code,Letta Code,https://github.com/letta-ai/letta-code/releases.atom,atom,specialist,framework|evolution,biweekly,5,3,memory context repository learning self-modification,Long-lived agent memory and context architecture
+a2a-spec,Agent2Agent Protocol,https://github.com/a2aproject/A2A/releases.atom,atom,specialist,framework|product,event,5,2,agent card task state protocol binding interoperability,Cross-framework agent communication standard
+otel-genai-semconv,OpenTelemetry GenAI Semantic Conventions,https://github.com/open-telemetry/semantic-conventions-genai/commits/main.atom,atom,specialist,framework|evaluation,biweekly,5,3,agent workflow plan tool span metrics tracing,Cross-framework runtime and observability semantics
+strands-agents,Strands Agents SDK,https://github.com/strands-agents/sdk-python/releases.atom,atom,trial,framework|evaluation,weekly,5,4,hooks plugins snapshots A2A telemetry,Four-run trial for distinctive runtime mechanisms
+openai-agents-python,OpenAI Agents SDK Python,https://github.com/openai/openai-agents-python/releases.atom,atom,core,framework|evaluation|product,weekly,5,2,agents tracing guardrails handoffs,Primary SDK releases
+mcp-spec,Model Context Protocol,https://github.com/modelcontextprotocol/specification/commits/main.atom,atom,core,framework|product,weekly,5,2,spec protocol transport security,Primary protocol change stream
+mcp-servers,Model Context Protocol Servers,https://github.com/modelcontextprotocol/servers/commits/main.atom,atom,specialist,framework|product,weekly,5,3,server ecosystem reference implementations,Primary MCP ecosystem changes
+langfuse-repo,Langfuse,https://github.com/langfuse/langfuse/releases.atom,atom,core,framework|evaluation|product,weekly,5,3,tracing evals observability prompts,Primary observability releases
+langfuse-blog,Langfuse Blog,https://langfuse.com/blog,page,specialist,framework|evaluation|product,weekly,4,3,agent observability tracing evaluation skills,Technical interpretation and observability methods
+inspect-ai,Inspect AI,https://github.com/UKGovernmentBEIS/inspect_ai/releases.atom,atom,specialist,evaluation,weekly,5,2,agent evaluation sandbox scoring,Primary evaluation framework releases
+openai-evals,OpenAI Evals,https://github.com/openai/evals/commits/main.atom,atom,specialist,evaluation,biweekly,5,3,eval framework benchmark,Primary evaluation code changes
+lm-evaluation-harness,LM Evaluation Harness,https://github.com/EleutherAI/lm-evaluation-harness/releases.atom,atom,specialist,evaluation,biweekly,5,3,benchmark evaluation harness,Primary evaluation harness releases
+helm,Stanford HELM,https://github.com/stanford-crfm/helm/releases.atom,atom,specialist,evaluation,biweekly,5,3,benchmark transparency cost,Primary benchmark framework releases
+agentbench,THUDM AgentBench,https://github.com/THUDM/AgentBench/commits/main.atom,atom,specialist,evaluation,monthly,4,3,agent benchmark environments,Primary benchmark artifact changes
+swe-bench,SWE-bench,https://github.com/SWE-bench/SWE-bench/releases.atom,atom,specialist,evaluation|framework,weekly,5,3,coding agent benchmark contamination,Primary coding-agent benchmark releases
+metr,METR Research,https://metr.org/blog/,page,specialist,evaluation|evolution,biweekly,5,2,autonomy time horizon evaluation,Independent frontier-agent evaluations
+epoch-ai,Epoch AI,https://epoch.ai/blog,page,specialist,evaluation|evolution,biweekly,4,2,compute scaling inference economics,Empirical compute and scaling analysis
+alignment-forum,Alignment Forum,https://www.alignmentforum.org/feed.xml,rss,weak-signal,evaluation|evolution,weekly,3,5,agents self-improvement agency,Theory and emerging arguments requiring verification
+lesswrong-ai,LessWrong AI feed,https://www.lesswrong.com/feed.xml?view=curated-rss,rss,weak-signal,evaluation|evolution,weekly,3,5,AI agents self-improvement,Curated weak signals and conceptual work
+interconnects,Interconnects,https://www.interconnects.ai/feed,rss,weak-signal,evaluation|evolution|product,weekly,3,4,RL agents inference scaling,Independent analysis and research discovery
+latent-space,Latent Space,https://www.latent.space/feed,rss,weak-signal,framework|product,weekly,3,5,agents developer tools architecture,Practitioner ecosystem signals
+hacker-news,Hacker News,https://news.ycombinator.com/rss,rss,weak-signal,framework|evaluation|evolution|product,weekly,2,5,AI agents developer tools systems research,Serendipity source for one controlled random signal per report
+github-blog,GitHub Blog,https://github.blog/feed/,rss,specialist,framework|product,biweekly,4,4,coding agents developer workflow,Developer-platform and agent workflow changes
+github-changelog,GitHub Changelog,https://github.blog/changelog/feed/,rss,specialist,framework|product,weekly,5,4,Copilot agents API workflow,Primary platform changelog
+cloudflare-blog,Cloudflare Blog,https://blog.cloudflare.com/rss/,rss,specialist,framework|product,biweekly,4,5,agents MCP inference platform,Infrastructure and deployment patterns
+microsoft-ai-blog,Microsoft AI Blog,https://blogs.microsoft.com/ai/feed/,rss,specialist,framework|product,biweekly,4,5,agents Copilot platform,Primary product and platform announcements
+aws-ml-blog,AWS Machine Learning Blog,https://aws.amazon.com/blogs/machine-learning/feed/,rss,specialist,framework|product,biweekly,4,5,agent architecture production,Production patterns with high filtering required
+nvidia-blog,NVIDIA Technical Blog,https://developer.nvidia.com/blog/feed/,rss,specialist,framework|evaluation|product,biweekly,4,5,agents inference optimization,Inference and agent infrastructure

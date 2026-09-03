@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{{REPORT_TITLE}} · {{DATE_RANGE}}</title>
+  <style>
+    :root {
+      --paper: #faf9f5;
+      --ink: #141413;
+      --muted: #686761;
+      --line: #d8d6cf;
+      --soft-line: #e8e6df;
+      --coral: #d97757;
+      --coral-soft: #f1ddd4;
+      --sage: #697b68;
+      --blue: #4f6d7a;
+      --white: #ffffff;
+      --sans: Arial, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+      --page: 1440px;
+      --gutter: 32px;
+    }
+
+    * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.55;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      color: var(--coral);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--coral);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 20;
+      top: 8px;
+      left: 8px;
+      padding: 8px 12px;
+      background: var(--ink);
+      color: var(--white);
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(100%, var(--page));
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-row {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 13px;
+      height: 13px;
+      flex: 0 0 auto;
+      background: var(--coral);
+      transform: rotate(45deg);
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .header-label {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .subnav {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--soft-line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .subnav nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .subnav a {
+      text-decoration: none;
+    }
+
+    .hero {
+      padding-block: 64px 72px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.8fr);
+      gap: 72px;
+      align-items: start;
+    }
+
+    .hero-grid > *,
+    .judgment-grid > *,
+    .section-head > *,
+    .random-grid > *,
+    .axis-block > * {
+      min-width: 0;
+    }
+
+    .eyebrow,
+    .section-kicker,
+    .signal-meta,
+    .source-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    li,
+    dd,
+    td {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      font-family: var(--sans);
+      font-size: 28px;
+      line-height: 1.12;
+      font-weight: 700;
+    }
+
+    .hero-summary {
+      max-width: 36ch;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .hero-stat {
+      display: inline-flex;
+      max-width: 100%;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero-stat strong {
+      min-width: 0;
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+    }
+
+    .hero-stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .axis-index {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .axis-index a {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: baseline;
+      padding-block: 3px;
+      font-family: var(--serif);
+      font-size: 50px;
+      line-height: 1.08;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .axis-index a > span:first-child {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .axis-index .arrow {
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 36px;
+      font-weight: 400;
+    }
+
+    .judgment-band {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .judgment-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1.8fr);
+      gap: 72px;
+      padding-block: 56px 64px;
+    }
+
+    .judgment-band .section-kicker {
+      color: #b8b6ae;
+    }
+
+    .judgment-copy {
+      max-width: 46ch;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 31px;
+      line-height: 1.25;
+    }
+
+    .watch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .watch-org {
+      min-width: 0;
+      padding: 30px 32px 28px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .watch-org::before {
+      content: attr(data-state);
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .watch-org[data-state="material-update"]::before {
+      color: var(--sage);
+    }
+
+    .watch-org-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .watch-org-head h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.15;
+      font-weight: 500;
+    }
+
+    .watch-org-head time {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .watch-primary-block {
+      padding-block: 22px;
+    }
+
+    .watch-label {
+      margin-bottom: 9px;
+      color: var(--coral);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .watch-primary-block h4 {
+      max-width: 25ch;
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 500;
+    }
+
+    .watch-primary-block > p:last-child {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .watch-more {
+      padding-top: 17px;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .watch-more-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .watch-more-head p {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .watch-all-trigger {
+      flex: 0 0 auto;
+      padding: 0;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .watch-all-trigger:hover,
+    .watch-all-trigger:focus-visible {
+      color: var(--coral);
+    }
+
+    .watch-more ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .watch-more li {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .watch-popover {
+      width: min(560px, calc(100vw - 32px));
+      max-height: min(72vh, 640px);
+      margin: auto;
+      padding: 0;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 0 18px 60px rgba(20, 20, 18, 0.18);
+    }
+
+    .watch-popover::backdrop {
+      background: rgba(20, 20, 18, 0.28);
+    }
+
+    .watch-popover-head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .watch-popover-head h4 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 21px;
+      font-weight: 500;
+    }
+
+    .watch-popover-close {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .watch-popover-close:hover,
+    .watch-popover-close:focus-visible {
+      color: var(--coral);
+    }
+
+    .watch-all-list {
+      margin: 0;
+      padding: 4px 22px 14px;
+      list-style: none;
+    }
+
+    .watch-all-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px 18px;
+      padding-block: 16px;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .watch-all-item:first-child {
+      border-top: 0;
+    }
+
+    .watch-all-item a {
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .watch-all-item time,
+    .watch-all-source {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .watch-all-source {
+      grid-column: 1 / -1;
+    }
+
+    .section {
+      padding-block: 72px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1.8fr);
+      gap: 72px;
+      margin-bottom: 42px;
+    }
+
+    .section-title {
+      margin-bottom: 0;
+      font-family: var(--serif);
+      font-size: 46px;
+      line-height: 1.08;
+      font-weight: 500;
+    }
+
+    .section-intro {
+      max-width: 56ch;
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .signals {
+      border-top: 1px solid var(--line);
+    }
+
+    .signal {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 32px;
+      min-width: 0;
+      padding-block: 34px 38px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .signal-number {
+      display: block;
+      padding-top: 2px;
+      color: var(--coral);
+      font-family: var(--serif);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .signal-body {
+      min-width: 0;
+    }
+
+    .signal h3 {
+      max-width: 36ch;
+      margin-bottom: 15px;
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.18;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+
+    .signal-meta {
+      margin-bottom: 12px;
+    }
+
+    .signal-change {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 18px;
+      max-width: 82ch;
+      margin-top: 20px;
+      padding: 18px 20px;
+      background: var(--ink);
+      color: var(--paper);
+      border-top: 3px solid var(--coral);
+    }
+
+    .signal-change .signal-label {
+      color: #e7b5a5;
+    }
+
+    .signal-change p {
+      margin: 0;
+      color: var(--paper);
+    }
+
+    .signal-label,
+    .signal-field dt {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .signal dl {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      margin: 24px 0 0;
+      border-top: 1px solid var(--soft-line);
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .signal-field {
+      min-width: 0;
+      padding: 18px 22px 20px 0;
+    }
+
+    .signal-field + .signal-field {
+      padding-left: 22px;
+      border-left: 1px solid var(--soft-line);
+    }
+
+    .signal-field dt {
+      margin: 0 0 8px;
+    }
+
+    .signal-field dd {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .signal-source {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .axis-block {
+      display: grid;
+      grid-template-columns: minmax(210px, 0.7fr) minmax(0, 2fr);
+      gap: 54px;
+      padding-block: 38px;
+      border-top: 1px solid var(--line);
+    }
+
+    .axis-block:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .axis-block h3 {
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: 27px;
+      line-height: 1.16;
+      font-weight: 500;
+    }
+
+    .axis-status {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .axis-items {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px;
+    }
+
+    .paper-portfolio {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1.8fr);
+      gap: 54px;
+      margin-bottom: 14px;
+      padding: 20px 0 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .paper-portfolio-label {
+      margin: 0;
+      color: var(--coral);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .paper-portfolio-body {
+      color: var(--muted);
+    }
+
+    .paper-portfolio-body p {
+      margin: 0;
+    }
+
+    .paper-selection-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      min-height: 24px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .paper-pool {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      color: var(--ink);
+      background: #ffffff;
+    }
+
+    .paper-pool-hot {
+      border-color: var(--coral);
+      color: #9d442b;
+      background: var(--coral-soft);
+    }
+
+    .axis-item h4 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-size: 21px;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+
+    .axis-item p {
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+
+    .axis-item a {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .axis-scope {
+      max-width: 24ch;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .framework-studies {
+      min-width: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .framework-study {
+      padding-block: 28px 32px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .study-meta {
+      margin: 0 0 10px;
+      color: var(--coral);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .framework-study > h4 {
+      max-width: 34ch;
+      margin: 0 0 22px;
+      font-family: var(--serif);
+      font-size: 25px;
+      line-height: 1.22;
+      font-weight: 500;
+    }
+
+    .study-findings {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 0;
+      border-top: 1px solid var(--soft-line);
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .study-findings > div {
+      min-width: 0;
+      padding: 18px 20px 20px 0;
+    }
+
+    .study-findings > div + div {
+      padding-left: 20px;
+      border-left: 1px solid var(--soft-line);
+    }
+
+    .study-findings dt {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .study-findings dd {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .study-sources {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 18px;
+      padding-top: 18px;
+    }
+
+    .study-sources > p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .study-sources ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .study-sources li {
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .study-source {
+      font-weight: 700;
+    }
+
+    .study-source::after {
+      content: " · " attr(data-evidence-type);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .framework-empty {
+      padding-block: 28px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .synthesis {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .synthesis article {
+      min-height: 250px;
+      padding: 34px;
+      background: var(--paper);
+    }
+
+    .synthesis .relation {
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .synthesis h3 {
+      margin: 28px 0 14px;
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.16;
+      font-weight: 500;
+    }
+
+    .random-band {
+      background: var(--coral-soft);
+      border-bottom: 1px solid #d9b8aa;
+    }
+
+    .random-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1.8fr);
+      gap: 72px;
+      padding-block: 64px;
+    }
+
+    .random-title {
+      margin-bottom: 14px;
+      font-family: var(--serif);
+      font-size: 39px;
+      line-height: 1.12;
+      font-weight: 500;
+    }
+
+    .random-copy {
+      max-width: 62ch;
+      margin-bottom: 22px;
+    }
+
+    .random-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .queue-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th,
+    td {
+      padding: 18px 16px 18px 0;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td:first-child {
+      width: 80px;
+      color: var(--coral);
+      font-family: var(--serif);
+      font-size: 23px;
+    }
+
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px;
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+    }
+
+    .health-grid h3 {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .health-grid p,
+    .health-grid li {
+      color: var(--muted);
+    }
+
+    .health-grid ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .health-source {
+      padding-block: 14px;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .health-source:first-child {
+      border-top: 0;
+    }
+
+    .health-source::before {
+      content: attr(data-state);
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--coral);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .health-source h4 {
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    .site-footer {
+      padding-block: 32px 44px;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .footer-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 30px;
+    }
+
+    .footer-meta {
+      max-width: 52ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --gutter: 22px;
+      }
+
+      .hero-grid,
+      .judgment-grid,
+      .section-head,
+      .random-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .axis-index a {
+        font-size: 39px;
+      }
+
+      .signal dl {
+        grid-template-columns: 1fr;
+      }
+
+      .signal-field + .signal-field {
+        padding-left: 0;
+        border-top: 1px solid var(--soft-line);
+        border-left: 0;
+      }
+
+      .axis-block {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .paper-portfolio {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .study-findings {
+        grid-template-columns: 1fr;
+      }
+
+      .study-findings > div + div {
+        padding-left: 0;
+        border-top: 1px solid var(--soft-line);
+        border-left: 0;
+      }
+
+      .health-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .watch-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      :root {
+        --gutter: 18px;
+      }
+
+      .header-row {
+        min-height: 68px;
+      }
+
+      .header-meta time,
+      .subnav nav {
+        display: none;
+      }
+
+      .hero {
+        padding-block: 48px 56px;
+      }
+
+      .axis-index a {
+        grid-template-columns: minmax(0, 1fr) auto;
+        font-size: 34px;
+        overflow-wrap: anywhere;
+      }
+
+      .hero-stat strong {
+        font-size: 27px;
+      }
+
+      .axis-index .arrow {
+        font-size: 25px;
+      }
+
+      .judgment-copy {
+        font-size: 27px;
+      }
+
+      .section {
+        padding-block: 54px;
+      }
+
+      .section-title {
+        font-size: 37px;
+      }
+
+      .signal {
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 16px;
+        padding: 24px 0 30px;
+      }
+
+      .signal-number {
+        font-size: 25px;
+      }
+
+      .signal h3 {
+        font-size: 24px;
+      }
+
+      .signal-change {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .watch-all-item {
+        grid-template-columns: 1fr;
+      }
+
+      .watch-all-source {
+        grid-column: 1;
+      }
+
+      .axis-items,
+      .synthesis {
+        grid-template-columns: 1fr;
+      }
+
+      .study-sources {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .watch-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .random-title {
+        font-size: 34px;
+      }
+
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    @media print {
+      :root {
+        --paper: #ffffff;
+        --gutter: 18mm;
+      }
+
+      body {
+        font-size: 10pt;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .site-header,
+      .subnav {
+        position: static;
+      }
+
+      .section,
+      .axis-block,
+      .signal,
+      .synthesis article,
+      .random-band {
+        break-inside: avoid;
+      }
+
+      .hero,
+      .section {
+        padding-block: 12mm;
+      }
+
+      .axis-index a {
+        font-size: 27pt;
+      }
+
+      .signal-source::after,
+      .axis-item a::after,
+      .study-source::after,
+      .random-links a::after {
+        content: " (" attr(href) ")";
+        color: var(--muted);
+        font-size: 8pt;
+        font-weight: 400;
+      }
+
+      .watch-all-trigger,
+      .watch-popover {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至正文</a>
+
+  <header class="site-header">
+    <div class="shell header-row">
+      <a class="brand" href="#top" aria-label="AI Research Radar 首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>AI Research Radar</span>
+      </a>
+      <div class="header-meta">
+        <time datetime="{{REPORT_END_ISO}}">{{DATE_RANGE}}</time>
+        <span class="header-label">Weekly brief</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell subnav" id="top">
+    <span>Issue {{ISSUE_NUMBER}} · {{GENERATED_AT}}</span>
+    <nav aria-label="报告目录">
+      <a href="#priority-watch">重点观察</a>
+      <a href="#top-signals">Top Signals</a>
+      <a href="#research-axes">研究轴</a>
+      <a href="#synthesis">交叉洞察</a>
+      <a href="#random-signal">Random Signal</a>
+      <a href="#queue">Research Queue</a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">Personal AI intelligence</p>
+          <h1>{{REPORT_TITLE}}</h1>
+          <p class="hero-summary">{{REPORT_DECK}}</p>
+          <div class="hero-stat">
+            <strong>{{RETAINED_COUNT}}</strong>
+            <span>retained signals / {{CANDIDATE_COUNT}} candidates</span>
+          </div>
+        </div>
+        <ol class="axis-index" aria-label="研究方向">
+          <li><a href="#axis-framework"><span>Agent Framework Engineering</span><span class="arrow">→</span></a></li>
+          <li><a href="#axis-evaluation"><span>Evaluation &amp; Token Economics</span><span class="arrow">→</span></a></li>
+          <li><a href="#axis-evolution"><span>Self-Evolution &amp; AGI</span><span class="arrow">→</span></a></li>
+          <li><a href="#axis-product"><span>AI Products &amp; Platforms</span><span class="arrow">→</span></a></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="judgment-band" aria-labelledby="judgment-title">
+      <div class="shell judgment-grid">
+        <div>
+          <p class="section-kicker">Executive judgment</p>
+          <h2 id="judgment-title">本周判断</h2>
+        </div>
+        <p class="judgment-copy">{{EXECUTIVE_JUDGMENT}}</p>
+      </div>
+    </section>
+
+    <section class="section" id="priority-watch" aria-labelledby="priority-watch-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-kicker">Mandatory weekly coverage</p>
+          <div>
+            <h2 class="section-title" id="priority-watch-title">重点观察</h2>
+            <p class="section-intro">按机构汇总重点入口。每个机构只突出一篇最重要内容，其余更新以数量和少量标题索引呈现；访问失败项统一记录在文末 Source Health。</p>
+          </div>
+        </div>
+        <div class="watch-grid">
+          {{PRIORITY_ORGANIZATIONS_HTML}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="top-signals" aria-labelledby="top-signals-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-kicker">Ranked intelligence</p>
+          <div>
+            <h2 class="section-title" id="top-signals-title">Top Signals</h2>
+            <p class="section-intro">只保留足以改变研究判断、系统设计或实验计划的信号。分数代表研究价值，置信度代表证据状态。</p>
+          </div>
+        </div>
+
+        <div class="signals">{{TOP_SIGNALS_HTML}}</div>
+      </div>
+    </section>
+
+    <section class="section" id="research-axes" aria-labelledby="axes-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-kicker">Coverage by thesis</p>
+          <div>
+            <h2 class="section-title" id="axes-title">研究轴扫描</h2>
+            <p class="section-intro">以下内容补充 Top Signals 的技术背景与横向比较，不重复摘要。</p>
+          </div>
+        </div>
+
+        <aside class="paper-portfolio" aria-label="论文选择方法">
+          <p class="paper-portfolio-label">Paper portfolio · 70 / 30</p>
+          <div class="paper-portfolio-body">{{PAPER_PORTFOLIO_SUMMARY_HTML}}</div>
+        </aside>
+
+        <!-- Framework uses research notes; other axes use .axis-item summaries. -->
+        <section class="axis-block" id="axis-framework">
+          <div>
+            <p class="section-kicker">01 / Framework</p>
+            <h3>Agent Framework Engineering</h3>
+            <span class="axis-status">{{FRAMEWORK_STATUS}}</span>
+            <p class="axis-scope">外部比较与机制研究层。重点机构更新仅作为对照，不在这里重复摘要。</p>
+          </div>
+          <div class="framework-studies">{{FRAMEWORK_STUDIES_HTML}}</div>
+        </section>
+
+        <section class="axis-block" id="axis-evaluation">
+          <div>
+            <p class="section-kicker">02 / Evaluation</p>
+            <h3>Evaluation &amp; Token Economics</h3>
+            <span class="axis-status">{{EVALUATION_STATUS}}</span>
+          </div>
+          <div class="axis-items">{{EVALUATION_ITEMS_HTML}}</div>
+        </section>
+
+        <section class="axis-block" id="axis-evolution">
+          <div>
+            <p class="section-kicker">03 / Evolution</p>
+            <h3>Self-Evolution &amp; AGI</h3>
+            <span class="axis-status">{{EVOLUTION_STATUS}}</span>
+          </div>
+          <div class="axis-items">{{EVOLUTION_ITEMS_HTML}}</div>
+        </section>
+
+        <section class="axis-block" id="axis-product">
+          <div>
+            <p class="section-kicker">04 / Product</p>
+            <h3>AI Products &amp; Platforms</h3>
+            <span class="axis-status">{{PRODUCT_STATUS}}</span>
+          </div>
+          <div class="axis-items">{{PRODUCT_ITEMS_HTML}}</div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section" id="synthesis" aria-labelledby="synthesis-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-kicker">Cross-signal synthesis</p>
+          <div>
+            <h2 class="section-title" id="synthesis-title">交叉洞察</h2>
+            <p class="section-intro">只呈现由至少两个已核验信号共同支持的连接、张力或可测试假设。</p>
+          </div>
+        </div>
+        <div class="synthesis">{{SYNTHESIS_HTML}}</div>
+      </div>
+    </section>
+
+    <section class="random-band" id="random-signal" aria-labelledby="random-title">
+      <div class="shell random-grid">
+        <div>
+          <p class="section-kicker">Serendipity / Hacker News</p>
+          <span class="source-note">Seed {{RANDOM_SEED}}</span>
+        </div>
+        <article>
+          <h2 class="random-title" id="random-title">{{RANDOM_TITLE}}</h2>
+          <p class="random-copy"><strong>为什么值得扰动视野：</strong>{{RANDOM_TENSION}}</p>
+          <p class="random-copy"><strong>已核验事实与未知项：</strong>{{RANDOM_EVIDENCE}}</p>
+          <div class="random-links">{{RANDOM_LINKS_HTML}}</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="queue" aria-labelledby="queue-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-kicker">Next actions</p>
+          <div>
+            <h2 class="section-title" id="queue-title">Research Queue</h2>
+            <p class="section-intro">把信息消费转化为可交付的阅读、复现、比较、写作或观察任务。</p>
+          </div>
+        </div>
+        <div class="queue-wrap">
+          <table>
+            <thead>
+              <tr><th>Priority</th><th>Action</th><th>Artifact</th><th>Intended output</th></tr>
+            </thead>
+            <tbody>
+              {{RESEARCH_QUEUE_ROWS_HTML}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="source-health" aria-labelledby="health-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-kicker">Coverage quality</p>
+          <div>
+            <h2 class="section-title" id="health-title">Source Health</h2>
+            <p class="section-intro">说明本周获取失败、覆盖盲点与注册表调整建议。</p>
+          </div>
+        </div>
+        <div class="health-grid">
+          <section><h3>不可访问与核心源状态</h3><div>{{CORE_SOURCE_HEALTH_HTML}}</div></section>
+          <section><h3>覆盖盲点</h3><div>{{COVERAGE_GAPS_HTML}}</div></section>
+          <section><h3>注册表建议</h3><div>{{REGISTRY_CHANGES_HTML}}</div></section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-row">
+      <p class="footer-title">AI Research Radar</p>
+      <p class="footer-meta">生成于 {{GENERATED_AT}}。报告区分事实、解释与推测；重要判断应回到链接中的原始论文、代码、文档或发布说明复核。</p>
+    </div>
+  </footer>
+</body>
+</html>

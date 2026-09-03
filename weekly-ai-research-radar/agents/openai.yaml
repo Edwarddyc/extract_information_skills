@@ -1,0 +1,7 @@
+interface:
+  display_name: "Weekly AI Research Radar"
+  short_description: "Build a rigorous weekly AI research brief from public sources"
+  default_prompt: "Use $weekly-ai-research-radar to scan the previous week and produce my prioritized AI research brief."
+
+policy:
+  allow_implicit_invocation: true

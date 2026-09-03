@@ -1,0 +1,15 @@
+order,group,organization,source_id,lens,weekly_requirement
+1,foundation-labs,anthropic,claude-blog,Claude Code agents harness skills MCP and product architecture,Identify the newest item and whether it falls inside the scan interval
+2,foundation-labs,anthropic,anthropic-research,Agent alignment interpretability self-improvement and economic research,Identify all material research updates in the scan interval
+3,foundation-labs,openai,openai-engineering,Agent loops harness engineering sandbox context compaction skills and infrastructure,Identify all technical engineering updates in the scan interval
+4,foundation-labs,openai,openai-research,Agent evaluation reasoning self-improvement and frontier research,Identify all material research updates in the scan interval
+5,foundation-labs,openai,openai-news,Technical announcements that may not yet appear in a filtered index,Cross-check official feed for missed technical updates
+6,harness-pulse,hermes,hermes-repo,Architecture runtime tools memory context and releases,Summarize the newest meaningful release or state no material update
+7,harness-pulse,pi,pi-agent,Agent core coding-agent loop tools state sessions and extensions,Summarize the newest meaningful release or state no material update
+8,harness-pulse,deepseek-harness,deepseek-harness,Cordis plugin architecture agent loop tools context and breaking changes,Summarize meaningful commits and breaking changes without listing routine commits
+9,framework-pulse,agno,agno-repo,Agent team workflow memory HITL runtime and architectural changes,Summarize the newest meaningful release or state no material update
+10,framework-pulse,langchain,langchain-repo,LangChain core agents tools streaming compatibility and breaking changes,Summarize meaningful package releases rather than every patch
+11,framework-pulse,langchain,langgraph-repo,Runtime state persistence interrupts durable execution and multi-agent changes,Summarize the newest meaningful release or state no material update
+12,framework-pulse,langchain,langchain-blog,Agent engineering evaluation deployment and ecosystem patterns,Identify technical posts in the scan interval
+13,observability-pulse,langfuse,langfuse-repo,Tracing evaluation datasets cost latency MCP and agent observability,Summarize capability changes and operational implications
+14,observability-pulse,langfuse,langfuse-blog,Agent observability evaluation methods and production lessons,Identify technical posts in the scan interval
